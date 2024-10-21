@@ -1,0 +1,9 @@
+services:
+  platform-front:
+    container_name: currency-project-front
+    image: ghcr.io/laym0n/currency-project-front:release-1.0.0
+    env_file:
+      - ./env/currency-project-front.env
+    ports:
+      - 3001:3000
+    restart: unless-stopped
