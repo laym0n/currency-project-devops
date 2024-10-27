@@ -35,6 +35,42 @@ services:
     depends_on:
       - postgresql
     restart: unless-stopped
+  paymentspod:
+    container_name: paymentspod
+    image: docker.io/vndgindex/paymentspod
+    env_file:
+      - ./env/paymentspod.env
+    ports:
+      - 8081:8081
+    networks:
+      plugin-back:
+    restart: unless-stopped
+  authpod:
+    container_name: authpod
+    image: docker.io/vndgindex/authpod
+    env_file:
+      - ./env/authpod.env
+    ports:
+      - 8082:8082
+    networks:
+      plugin-back:
+      auth-db:
+    restart: unless-stopped
+  postgresql-auth:
+    container_name: postgresql-auth
+    image: postgres:15
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
+      PGDATA: "/var/lib/postgresql/data/pgdata"
+      POSTGRES_DB: postgresql-auth
+    ports:
+      - 5435:5432
+    networks:
+      auth-db:
+    restart: unless-stopped
 networks:
   back-db:
   front-network:
+  plugin-back:
+  auth-db:
