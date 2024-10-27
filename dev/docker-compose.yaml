@@ -7,3 +7,34 @@ services:
     ports:
       - 3001:3000
     restart: unless-stopped
+    networks:
+      front-network:
+  postgresql:
+    container_name: postgresql
+    image: postgres:15
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
+      PGDATA: "/var/lib/postgresql/data/pgdata"
+      POSTGRES_DB: currency_project
+    ports:
+      - 5434:5432
+    networks:
+      back-db:
+    restart: unless-stopped
+  back:
+    container_name: back
+    image: iluhander/virtual-currency
+    env_file:
+      - ./env/back.env
+    ports:
+      - 8080:8787
+    networks:
+      back-db:
+      front-network:
+    depends_on:
+      - postgresql
+    restart: unless-stopped
+networks:
+  back-db:
+  front-network:
