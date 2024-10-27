@@ -11,7 +11,7 @@ services:
       front-network:
   postgresql:
     container_name: postgresql
-    image: postgres:15
+    image: postgres:17
     environment:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: pass
@@ -58,7 +58,7 @@ services:
     restart: unless-stopped
   postgresql-auth:
     container_name: postgresql-auth
-    image: postgres:15
+    image: postgres:17
     environment:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: pass
