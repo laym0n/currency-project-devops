@@ -7,8 +7,6 @@ services:
     ports:
       - 3001:3000
     restart: unless-stopped
-    networks:
-      front-network:
   postgresql:
     container_name: postgresql
     image: postgres:17
@@ -31,7 +29,6 @@ services:
       - 8080:8787
     networks:
       back-db:
-      front-network:
     depends_on:
       - postgresql
     restart: unless-stopped
@@ -71,6 +68,5 @@ services:
     restart: unless-stopped
 networks:
   back-db:
-  front-network:
   plugin-back:
   auth-db:
